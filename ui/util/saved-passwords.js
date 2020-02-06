@@ -1,5 +1,4 @@
 // @flow
-import { ipcRenderer } from 'electron';
 import { DOMAIN } from 'config';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -77,32 +76,8 @@ export const getSavedPassword = () => {
 export const getKeychainPassword = () => {
   return new Promise<*>(resolve => {
     let password;
-    // @if TARGET='web'
-    // In the future, this will be the only code in this function
-    // Handling keytar stuff separately so we can easily rip it out later
     password = getCookie('saved-password');
     resolve(password);
-    // @endif
-
-    // @if TARGET='app'
-    password = getCookie('saved-password');
-
-    if (password) {
-      resolve(password);
-    } else {
-      // No password saved in a cookie, get it from the keychain, then delete the value in the keychain
-      ipcRenderer.once('get-password-response', (event, keychainPassword) => {
-        resolve(keychainPassword);
-
-        if (keychainPassword) {
-          setSavedPassword(keychainPassword, true);
-          ipcRenderer.send('delete-password');
-        }
-      });
-
-      ipcRenderer.send('get-password');
-    }
-    // @endif
   });
 };
 
@@ -133,11 +108,6 @@ export const doSignOutCleanup = () => {
     deleteCookie('auth_token');
     deleteCookie('saved-password');
     resolve();
-
-    // @if TARGET='app'
-    ipcRenderer.send('delete-auth-token');
-    ipcRenderer.send('delete-password');
-    // @endif;
   });
 };
 
