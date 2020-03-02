@@ -990,5 +990,6 @@
   "Required": "Required",
   "Email %help_link% or join our %chat_link% if you encounter any trouble verifying.": "Email %help_link% or join our %chat_link% if you encounter any trouble verifying.",
   "Show reposts": "Show reposts",
-  "Show reposts from the creators you follow.": "Show reposts from the creators you follow."
+  "Show reposts from the creators you follow.": "Show reposts from the creators you follow.",
+  "You can try refreshing to fix it. If you still have issues, your anti-virus software or firewall may be preventing startup.": "You can try refreshing to fix it. If you still have issues, your anti-virus software or firewall may be preventing startup."
 }
