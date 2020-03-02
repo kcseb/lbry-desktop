@@ -46,6 +46,7 @@ type DaemonSettings = {
   max_connections_per_download?: number,
   save_files: boolean,
   save_blobs: boolean,
+  ffmpeg_folder: string,
 };
 
 type Props = {
@@ -209,7 +210,7 @@ class SettingsPage extends React.PureComponent<Props, State> {
       hideBalance,
       userBlockedChannelsCount,
       floatingPlayer,
-      showReposts,
+      // showReposts,
       clearPlayingUri,
       darkModeTimes,
       clearCache,
@@ -256,6 +257,21 @@ class SettingsPage extends React.PureComponent<Props, State> {
                     }}
                   />
                   <p className="help">{__('LBRY downloads will be saved here.')}</p>
+                </React.Fragment>
+              }
+            />
+            <Card
+              title={__('Transcoding')}
+              actions={
+                <React.Fragment>
+                  <FileSelector
+                    type="openDirectory"
+                    currentPath={daemonSettings.ffmpeg_folder}
+                    onFileChosen={(newDirectory: WebFile) => {
+                      setDaemonSetting('ffmpeg_folder', newDirectory.path);
+                    }}
+                  />
+                  <p className="help">{__('Locate FFMPEG so we can transcode.')}</p>
                 </React.Fragment>
               }
             />

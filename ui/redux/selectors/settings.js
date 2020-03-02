@@ -62,8 +62,7 @@ export const makeSelectSharedPreferencesForKey = key =>
 export const selectHasWalletServerPrefs = createSelector(
   makeSelectSharedPreferencesForKey(SHARED_PREFERENCES.WALLET_SERVERS),
   servers => {
-    if (servers && servers.length) return true;
-    return false;
+    return !!(servers && servers.length);
   }
 );
 
